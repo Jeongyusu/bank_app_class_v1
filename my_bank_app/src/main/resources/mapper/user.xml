@@ -21,6 +21,11 @@
   		delete from user_tb where id = #{id}
   </delete>
   
+  
+  <select id = "findByUsernameAndPassword" resultType ="com.tenco.bankapp.repository.entity.User">
+  		select * from user_tb where username = #{username} and password = #{password}
+  </select>
+  
   <!-- 시용자 1명 조회 -->
   <select id = "findById" resultType ="com.tenco.bankapp.repository.entity.User">
   		select * from user_tb where id = #{id}
