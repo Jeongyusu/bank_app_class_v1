@@ -89,7 +89,7 @@ public class UserController {
 	   //서비스 호출
 	   User principal =userService.signIn(dto);
 	   session.setAttribute(Define.PRINCIPAL, principal); //세션에 사용자 정보 저장
-	   return "/account/list";
+	   return "redirect:/account/list";
 	   }
    
    @GetMapping("/logout")
