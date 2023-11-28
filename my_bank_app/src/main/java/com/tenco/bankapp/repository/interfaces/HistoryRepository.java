@@ -14,13 +14,12 @@ public interface HistoryRepository {
 	public int updateById(History history);
 	public int deleteById(Integer id);
 	public List<History> findAll();
-	public List<History> findByIdAndDynamicType(@Param("type") String type, @Param("id") Integer id);
+	public List<History> findByIdAndDynamicType(@Param("type") String type, @Param("accountId") Integer accountId);
 
 	//거래내역 조회
 //	public List<History> findByAccountNumber(String id);
 	//동적 쿼리 생성
 	//입금 / 출금 / 전체
 	//반드시 두 개 이상에 파라미터 사용시 @Param을 사용해야 한다.
-//	public List<History> findByIdAndDynamicType(@Param("type") String type, @Param("id") Integer id);
 	
 }
