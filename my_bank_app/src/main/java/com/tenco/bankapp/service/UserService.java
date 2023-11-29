@@ -30,6 +30,8 @@ public class UserService {
 					.username(dto.getUsername())
 					.password(passwordEncoder.encode(rawPwd))
 					.fullname(dto.getFullname())
+					.originFileName(dto.getOriginFileName())
+					.uploadFileName(dto.getUploadFileName())
 					.build(); // build() 반드시 호출
 		int resultRowCount = userRepository.insert(user);
 		if(resultRowCount != 1) {
