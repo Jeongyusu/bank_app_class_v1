@@ -2,6 +2,7 @@ package com.tenco.bankapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +18,17 @@ public class UserService {
 	@Autowired // 의존주입(생성자, 메서드)
 	private UserRepository userRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Transactional
 	public int signUp(SignUpFormDto dto) {
+		String rawPwd = dto.getPassword();
+		
 		//User, //SignUpFormDto
 		User user = User.builder()
 					.username(dto.getUsername())
-					.password(dto.getPassword())
+					.password(passwordEncoder.encode(rawPwd))
 					.fullname(dto.getFullname())
 					.build(); // build() 반드시 호출
 		int resultRowCount = userRepository.insert(user);
@@ -34,9 +40,14 @@ public class UserService {
 
 	public User signIn(SignInFormDto dto) {
 		
-		User userEntity = userRepository.findByUsernameAndPassword(dto);
+		// 1. username 아이디 존재 여부 확인
+		User userEntity = userRepository.findByUsername(dto);
 		if(userEntity == null) {
-			throw new CustomRestfullException("아이디 혹은 비번이 틀립니다", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfullException("존재하지 않는 계정입니다.", HttpStatus.BAD_REQUEST);
+		}
+		boolean isPwdMatched = passwordEncoder.matches(dto.getPassword(), userEntity.getPassword());
+		if(isPwdMatched == false) {
+			throw new CustomRestfullException("비밀번호가 잘못 되었습니다.", HttpStatus.BAD_REQUEST);
 		}
 		return userEntity;
 	}
