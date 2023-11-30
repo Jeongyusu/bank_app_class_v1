@@ -43,7 +43,7 @@ public class UserService {
 	public User signIn(SignInFormDto dto) {
 		
 		// 1. username 아이디 존재 여부 확인
-		User userEntity = userRepository.findByUsername(dto);
+		User userEntity = userRepository.findByUsername(dto.getUsername());
 		if(userEntity == null) {
 			throw new CustomRestfullException("존재하지 않는 계정입니다.", HttpStatus.BAD_REQUEST);
 		}
@@ -52,6 +52,11 @@ public class UserService {
 			throw new CustomRestfullException("비밀번호가 잘못 되었습니다.", HttpStatus.BAD_REQUEST);
 		}
 		return userEntity;
+	}
+
+	public User searchUsername(String username) {
+		
+		return userRepository.findByUsername(username);
 	}
 
 }

@@ -23,6 +23,6 @@ public interface UserRepository {
 	//사용자에 이름과 비번으로 조회
 	public User findByUsernameAndPassword(SignInFormDto dto);
 	//사용자 이름만 조회
-	public User findByUsername(SignInFormDto dto);
+	public User findByUsername(String username);
 	
 }

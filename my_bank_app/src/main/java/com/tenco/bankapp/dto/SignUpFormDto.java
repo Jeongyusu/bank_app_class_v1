@@ -2,12 +2,16 @@ package com.tenco.bankapp.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
-@Getter
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SignUpFormDto {
 
 	private String username;
@@ -17,5 +21,6 @@ public class SignUpFormDto {
 	private String originFileName;
 	private String uploadFileName;
 	
+
 	
 }
